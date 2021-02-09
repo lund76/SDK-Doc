@@ -12,10 +12,10 @@ webhook receiver.
 
 # Register a webhook
 
-To register a webhook: ****
+Send the following request to register a webhook: 
 
 ``` json
-POST /api/v1/Webhook
+POST /api/v1/Webhook HTTP/1.1
 Content-Type: application/json
 
 {
@@ -33,8 +33,12 @@ Content-Type: application/json
 ```
 
 This will register the webhook, and check that the `TargetUrl` responds to a test POST.
+The  `TargetUrl` must 
+* be https
+* have a valid TLS certificate.
+* respond 200 OK when it receives a POST with a test event.
 
-When the event(s) happen (`contact.changed` for example), then the Target URL is notified by HTTP POST using a message like the one described here:
+When the event(s) happen (`contact.changed` for example), then the Target URL is notified by HTTP POST using a message like the one shown here:
 
 ```json
 {
@@ -51,6 +55,28 @@ When the event(s) happen (`contact.changed` for example), then the Target URL is
   "Event": "contact.changed",
   "PrimaryKey": 994863,
   "Entity": "contact",
+  "ContextIdentifier": "Cust1234",
+  "ChangedByAssociateId": 316,
+  "WebhookName":"Name you provided"
+}
+```
+
+## Delete events
+
+Since the item has been deleted, the delete event contains the id values from the deleted object as part of the webhook payload.
+
+```json
+{
+  "Timestamp": "2018-04-24T07:50:50.6812131Z",
+  "Values": {
+    "sale_id": 994863,
+    "contact_id": 43,
+    "person_id": 64,
+    "project_id": 178105
+  },
+  "Event": "sale.deleted",
+  "PrimaryKey": 994863,
+  "Entity": "sale",
   "ContextIdentifier": "Cust1234",
   "ChangedByAssociateId": 316,
   "WebhookName":"Name you provided"

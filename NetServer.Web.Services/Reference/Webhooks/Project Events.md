@@ -11,6 +11,7 @@ These events are fired when project rows are changed:
 Project.created
 
 ```json
+POST /webhook HTTP/1.1
 Content-Type: application/json; charset=utf-8
 User-Agent: NetServer-Webhook/8.8.6684.1719
 X-Superoffice-Event: project.created
@@ -88,6 +89,10 @@ Project.deleted
   "EventId": "e87ac619-c864-4881-89eb-07ca5521ee2c",
   "Timestamp": "2018-04-24T08:18:42.089895Z",
   "Changes": [],
+  "Values": {
+    "associate_id": 4039840,
+    "project_id": 178105
+  },
   "Event": "project.deleted",
   "PrimaryKey": 178105,
   "Entity": "project",
